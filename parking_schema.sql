@@ -68,13 +68,12 @@ CREATE TABLE spot_event_history(
     lot_id INT NOT NULL AUTO_INCREMENT,
     FOREIGN KEY (spot_number, lot_id) REFERENCES parking_spot(spot_number, lot_id)
 );
-
-# You should have 2 stadiums: Cowpokes Stadium and the Rodeo.
+--  You should have 2 stadiums: Cowpokes Stadium and the Rodeo.
 INSERT INTO stadium (address, stadium_name) VALUES
 ('1234 Football Lane', 'Cowpokes Stadium'),
 ('5678 Football Dr', 'Rodeo');
 SELECT * FROM stadium;
-# Each stadium should have at least 3 lots
+-- Each stadium should have at least 3 lots
 INSERT INTO lot(stadium_id) VALUES
 ('Cowpokes Stadium'),
 ('Cowpokes Stadium'),
@@ -83,7 +82,7 @@ INSERT INTO lot(stadium_id) VALUES
 ('Rodeo'),
 ('Rodeo');
 select * from lot;
-# each of which has at least 5 spots
+-- each of which has at least 5 spots
 INSERT INTO parking_spot(spot_number,lot_id, is_available, is_handicap) VALUES
 (101,4,TRUE,FALSE),
 (102,4,TRUE,FALSE),
@@ -121,14 +120,14 @@ INSERT INTO parking_spot(spot_number,lot_id, is_available, is_handicap) VALUES
 (604,9,TRUE,FALSE),
 (605,9,TRUE,FALSE);
 select * from parking_spot;
-# Each stadium should have hosted at least 2 events
+-- Each stadium should have hosted at least 2 events
 INSERT INTO event(date, start_time, end_time,stadium) VALUES
 ('2001-01-01', '11:50:00', '18:00:00','Cowpokes Stadium'),
 ('2021-05-03', '6:55:20', '11:00:00','Cowpokes Stadium'),
 ('2022-02-14', '12:00:00', '18:00:00','Rodeo'),
 ('2122-01-24', '01:00:00', '23:00:00','Rodeo');
 select * from event;
-# each of which has some number of parking allocations
+--  each of which has some number of parking allocations
 INSERT INTO spot_event_history(event,spot_number,lot_id) VALUES
 (1,101,4),
 (2,202,5),
