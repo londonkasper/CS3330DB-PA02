@@ -29,8 +29,9 @@ app.get('/health', (request, response, next) => {
 });
 
 app.use('/session', sessionRoutes);
+app.use('/user',  usersRoutes);
 app.use('/', authenticateJWT, loggedInRoutes);
-app.use('/',  usersRoutes); //authenticateJWT,
+ //authenticateJWT,
 
 app.listen(config.port, config.host, (e) => {
     if (e) {

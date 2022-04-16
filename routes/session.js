@@ -14,12 +14,12 @@ router.post('/', async (req, res, next) => {
             });
         } else {
             res.status(201).json({
-                message: 'Successfully logged in',
+                message: 'Successfully authenticated',
                 token: result
             });
         }
     } catch (err) {
-        console.error('Failed to create new user:', err);
+        console.error('Failed to authenticate:', err);
         res.status(401).json({ message: err.toString() });
     }
 
