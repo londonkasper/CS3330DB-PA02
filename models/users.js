@@ -84,6 +84,31 @@ const getAllUser = async()=>{
     return result;
 };
 
+const getSpots = async(stadium, lot, available)=>{
+    const query = knex(PARKING_SPOT_TABLE)
+        .modify(function(joinquery) {
+            if(stadium){
+                joinquery.join('lot', 'parking_spot.lot_id', '=', 'lot.id');
+            }
+        })
+        .where((builder) => {
+            if (lot) {
+                builder.where('lot_id', lot)
+            }
+        })
+        .where((builder) => {
+            if (available) {
+                builder.where('is_available', available)
+            }
+        })
+
+
+    //const query = knex(PARKING_SPOT_TABLE)
+    //const query = knex(PARKING_SPOT_TABLE).join('lot', 'parking_spot.lot_id', '=', 'lot.id').where({lot_id:lot, is_available:available,stadium_id:stadium});;
+    const result = await query;
+    return result;
+};
+
 module.exports = {
     createNewUser,
     findUserByUsername,
@@ -92,5 +117,6 @@ module.exports = {
     changeAllocation,
     deleteAllocation,
     findVehicleByLicensePlate,
-    getAllUser
+    getAllUser,
+    getSpots
 };

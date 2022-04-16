@@ -78,6 +78,26 @@ router.delete('/allocation/:allocation_id', async(req, res, next)=>{
 
 });
 
+router.get('/spots', async (req, res, next) => {
+    try {
+        const stadium = req.query.stadium;
+        const lot = req.query.lot;
+        const available = req.query.available;
 
+        console.log("stadium",stadium,"lot",lot,"available",available);
+
+        const results = await User.getSpots(stadium, lot, available);
+        //console.log("results of the query",results);
+        res.status(200).json({
+            message: 'Spots retrieved',
+            results: results
+        });
+    } catch (error) {
+        res.status(500).json({
+            message: 'Something went wrong'
+        });
+    }
+    next();
+});
 
 module.exports = router;
