@@ -25,8 +25,8 @@ CREATE TABLE employee(
     lot_assignment INT REFERENCES lot(id),
     first_name VARCHAR(200),
     last_name VARCHAR (200),
-    username VARCHAR (25),
-    password VARCHAR(25)
+    username VARCHAR (255),
+    password VARCHAR(255)
 );
 
 CREATE TABLE vehicle(

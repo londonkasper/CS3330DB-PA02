@@ -28,7 +28,7 @@ app.get('/health', (request, response, next) => {
 });
 
 app.use('/session', sessionRoutes);
-app.use('/employees', authenticateJWT, usersRoutes);
+app.use('/users',  usersRoutes); //authenticateJWT,
 
 app.listen(config.port, config.host, (e) => {
     if (e) {
