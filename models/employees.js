@@ -6,7 +6,12 @@ const findUserByUsername = async(username)=>{
     const result = await query;
     return result;
 }
+const getAllUser = async()=>{
+    const query = knex(EMPLOYEE_TABLE);
+    const result = await query;
+    return result;
+}
 
 module.exports = {
-    findUserByUsername
+    findUserByUsername, getAllUser
 };

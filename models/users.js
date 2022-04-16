@@ -1,7 +1,7 @@
-const knex = require('../database/knex');
+const knex = require('../db/knex');
 const bcrypt = require('bcrypt');
 
-const USER_TABLE = 'users';
+const USER_TABLE = 'employee';
 
 const createNewUser = async (username, password) => {
     console.log('Raw password:', password);
@@ -37,7 +37,11 @@ const authenticateUser = async (username, password) => {
     }
     return null;
 }
-
+const getAllUser = async()=>{
+    const query = knex(EMPLOYEE_TABLE);
+    const result = await query;
+    return result;
+}
 
 module.exports = {
     createNewUser,

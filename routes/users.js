@@ -13,6 +13,17 @@ router.get('/current', async (req, res, next) => {
         res.sendStatus(500).json({ message: err.toString() });
     }
 });
+router.get('/all', async(req, res, next) =>{
+    try {
+        const result = await User.getAllUser();
+        res.status(201).json(result);
+
+    }catch(err){
+        console.error('Failed to load all users:', err);
+        res.sendStatus(500).json({message:err.toString()});
+    }
+
+});
 
 router.post('/account`', async (req, res, next) => {
     try {
@@ -22,12 +33,11 @@ router.post('/account`', async (req, res, next) => {
         res.status(201).json(result);
     } catch (err) {
         console.error('Failed to create new user:', err);
-        res.status(500).json({ message: err.toString() });
+        res.status(400).json({ message: err.toString() });
     }
 
     next();
 })
 
-router.post('')
 
 module.exports = router;

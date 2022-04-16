@@ -1,17 +1,20 @@
 CREATE DATABASE parking_db;
 USE parking_db;
+-- DROP DATABASE if exists parking_db;
+
 CREATE TABLE stadium(
     address VARCHAR(200),
     stadium_name VARCHAR(200) PRIMARY KEY
 );
 CREATE TABLE lot(
-    id SERIAL PRIMARY KEY,
-    stadium_id VARCHAR(200) REFERENCES stadium(stadium_name)
+    id INT NOT NULL AUTO_INCREMENT,
+    stadium_id VARCHAR(200) REFERENCES stadium(stadium_name),
+    PRIMARY KEY (id, stadium_id)
 );
 
 CREATE TABLE parking_spot(
     spot_number INTEGER,
-    lot_id SERIAL REFERENCES lot(id),
+    lot_id INT REFERENCES lot(id),
     is_available BOOLEAN NOT NULL DEFAULT TRUE,
     is_handicap BOOLEAN NOT NULL DEFAULT FALSE,
     PRIMARY KEY(spot_number, lot_id)
@@ -19,9 +22,11 @@ CREATE TABLE parking_spot(
 
 CREATE TABLE employee(
     ssn INTEGER PRIMARY KEY ,
-    lot_assignment SERIAL REFERENCES lot(id),
+    lot_assignment INT REFERENCES lot(id),
     first_name VARCHAR(200),
-    last_name VARCHAR (200)
+    last_name VARCHAR (200),
+    username VARCHAR (25),
+    password VARCHAR(25)
 );
 
 CREATE TABLE vehicle(
@@ -34,11 +39,12 @@ CREATE TABLE allocation(
     employee INTEGER REFERENCES employee(ssn),
     license_plate VARCHAR(20) REFERENCES vehicle(license_plate),
     spot_number INTEGER,
-    lot_id SERIAL,
+    lot_id INT NOT NULL,
     arrival_time TIME,
     departure_time TIME,
     FOREIGN KEY (spot_number, lot_id) REFERENCES parking_spot(spot_number, lot_id),
-    allocation_num INTEGER PRIMARY KEY
+    allocation_num INT NOT NULL AUTO_INCREMENT,
+    PRIMARY KEY (allocation_num)
 );
 
 CREATE TABLE driver(
@@ -56,17 +62,19 @@ CREATE TABLE fan(
 );
 
 CREATE TABLE event(
-    id SERIAL PRIMARY KEY,
+    id INT NOT NULL AUTO_INCREMENT,
     date date,
     start_time time,
     end_time time,
-    stadium VARCHAR(200) REFERENCES stadium(stadium_name)
+    stadium VARCHAR(200) REFERENCES stadium(stadium_name),
+    PRIMARY KEY (id)
 );
 CREATE TABLE spot_event_history(
-    event SERIAL REFERENCES event(id),
+    event INT REFERENCES event(id),
     spot_number INTEGER,
-    lot_id INT NOT NULL AUTO_INCREMENT,
-    FOREIGN KEY (spot_number, lot_id) REFERENCES parking_spot(spot_number, lot_id)
+    lot_id INT,
+    FOREIGN KEY (spot_number, lot_id) REFERENCES parking_spot(spot_number, lot_id),
+    PRIMARY KEY (event, lot_id, spot_number)
 );
 --  You should have 2 stadiums: Cowpokes Stadium and the Rodeo.
 INSERT INTO stadium (address, stadium_name) VALUES
@@ -132,6 +140,8 @@ INSERT INTO spot_event_history(event,spot_number,lot_id) VALUES
 (1,101,4),
 (2,202,5),
 (3,303,6),
+
+
 (4,404,7);
 select * from spot_event_history;
 
