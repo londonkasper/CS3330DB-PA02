@@ -1,5 +1,5 @@
 const knex = require('../db/knex');
-const EMPLOYEE_TABLE = 'employees';
+const EMPLOYEE_TABLE = 'employee';
 
 const findUserByUsername = async(username)=>{
     const query = knex(EMPLOYEE_TABLE).where({username});
