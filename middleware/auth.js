@@ -3,13 +3,16 @@ const jwt = require("jsonwebtoken");
 const accessTokenSecret = 'JeremyFarted';
 
 const authenticateJWT = (req, res, next) => {
-  const authHeader = req.headers.authorization;
+  const authHeader = req.headers.authorization
+  console.log("Auth Header:",authHeader);
   if (!authHeader) {
     return res.sendStatus(401);
   }
   const token = authHeader.split(" ")[1];
+  //console.log("Token: ",token);
   jwt.verify(token, accessTokenSecret, (err, user) => {
     if (err) {
+      //console.log("Auth 403 err");
       return res.sendStatus(403);
     }
     req.user = user;

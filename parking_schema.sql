@@ -48,7 +48,7 @@ CREATE TABLE allocation(
     allocation_num INT NOT NULL AUTO_INCREMENT,
     PRIMARY KEY (allocation_num)
 );
-
+SELECT * FROM parking_spot;
 CREATE TABLE driver(
     driver_license INTEGER PRIMARY KEY,
     vehicle VARCHAR(20) REFERENCES vehicle(license_plate),
