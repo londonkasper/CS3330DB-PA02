@@ -34,7 +34,9 @@ CREATE TABLE vehicle(
     type VARCHAR(20),
     is_handicap BOOLEAN NOT NULL DEFAULT FALSE
 );
-
+SELECT * FROM vehicle;
+SELECT * FROM allocation;
+SELECT * FROM employee;
 CREATE TABLE allocation(
     employee INTEGER REFERENCES employee(ssn),
     license_plate VARCHAR(20) REFERENCES vehicle(license_plate),
