@@ -90,6 +90,7 @@ module.exports = {
     authenticateUser,
     createNewAllocation,
     changeAllocation,
+    deleteAllocation,
     findVehicleByLicensePlate,
     getAllUser
 };
