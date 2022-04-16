@@ -5,6 +5,7 @@ const mysql = require('mysql');
 
 const usersRoutes = require('./routes/users');
 const sessionRoutes = require('./routes/session');
+const loggedInRoutes = require('./routes/loggedInRoutes');
 
 const { authenticateJWT, authenticateWithClaims } = require('./middleware/auth');
 
@@ -28,6 +29,7 @@ app.get('/health', (request, response, next) => {
 });
 
 app.use('/session', sessionRoutes);
+app.use('/', authenticateJWT, loggedInRoutes);
 app.use('/',  usersRoutes); //authenticateJWT,
 
 app.listen(config.port, config.host, (e) => {
