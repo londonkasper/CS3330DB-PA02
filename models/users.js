@@ -17,19 +17,38 @@ const createNewUser = async (username, password, first_name, last_name, ssn, lot
     return result;
 };
 
-const createNewAllocation = async(license_plate, spot_number, lot_id, type, is_handicap, arrival_time, departure_time, employee )=>{//include more information for vehicle?
+const createNewAllocation = async(license_plate, spot_number, lot_id, type, is_handicap, arrival_time, departure_time, employee )=>{
     const vehicle = await findVehicleByLicensePlate(license_plate);
-    if(vehicle.length === 0){ // If the vehicle's license plate isn't already found in the vehicle table, it needs to be added
+    if(vehicle.length === 0){ 
         const query = knex(VEHICLE_TABLE).insert({license_plate: license_plate, type:type, is_handicap:is_handicap});
-        
         const result = await query;
-        return result;
-//need to add vehicle to table here if not found
-    }//continue as if vehicle already in table now
+        console.log('Result of adding vehicle: ', result.toString);
+    }
     const makeAlloc = knex(ALLOCATION_TABLE).insert({license_plate:license_plate, spot_number:spot_number, lot_id:lot_id, arrival_time:arrival_time, departure_time:departure_time, employee:employee  })
     console.log(`Raw query for createNewAllocation: `, makeAlloc.toString());
     const result2 = await makeAlloc;
     return result2;
+};
+
+const changeAllocation = async(body, id)=>{
+    const vehicle = await findVehicleByLicensePlate(body.license_plate);
+    if(vehicle.length === 0 ){
+        const query = knex(VEHICLE_TABLE).insert({license_plate: body.license_plate, type:body.type, is_handicap:body.is_handicap});
+        const result = await query;
+        console.log('Result of adding vehicle: ', result.toString);
+    }
+    const changeAlloc = knex(ALLOCATION_TABLE).where({allocation_num : id}).update({license_plate : body.license_plate});
+    console.log(`Raw query for changeAllocation: `, changeAlloc.toString());
+    const result2 = await changeAlloc;
+    return result2;
+};
+
+
+const deleteAllocation = async(id)=>{
+    const allocation = knex(ALLOCATION_TABLE).where({allocation_num : id}).del();
+    console.log(`Raw query for deleteAllocation: `, deleteAllocation.toString());
+    const result = await allocation;
+    return result;
 };
 
 const findUserByUsername = async (username) => {
@@ -41,15 +60,8 @@ const findVehicleByLicensePlate = async(license_plate)=>{
     const query1 = knex(VEHICLE_TABLE).where({license_plate});
     const result = await query1;
     return result;
-    // const query = knex(VEHICLE_TABLE).where({license_plate});
-    // const exists = await query;
-    // if(exists.length === 0){
-    //     console.log(`No vehicles in table with the license plate: ${license_plate}`);
-    //     return null;
-    // }
-    // const vehicle = exists[0];
-    // return vehicle;
-}
+};
+
 const authenticateUser = async (username, password) => {
     const users = await findUserByUsername(username);
     console.log('Results of users query', users);
@@ -64,18 +76,21 @@ const authenticateUser = async (username, password) => {
         return user;
     }
     return null;
-}
+};
+
 const getAllUser = async()=>{
     const query = knex(EMPLOYEE_TABLE);
     const result = await query;
     return result;
-}
+};
 
 module.exports = {
     createNewUser,
     findUserByUsername,
     authenticateUser,
     createNewAllocation,
+    changeAllocation,
+    deleteAllocation,
     findVehicleByLicensePlate,
     getAllUser
 };
