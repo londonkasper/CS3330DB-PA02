@@ -25,8 +25,8 @@ CREATE TABLE employee(
     lot_assignment INT REFERENCES lot(id),
     first_name VARCHAR(200),
     last_name VARCHAR (200),
-    username VARCHAR (25),
-    password VARCHAR(25)
+    username VARCHAR (255),
+    password VARCHAR(255)
 );
 
 CREATE TABLE vehicle(
@@ -34,7 +34,9 @@ CREATE TABLE vehicle(
     type VARCHAR(20),
     is_handicap BOOLEAN NOT NULL DEFAULT FALSE
 );
-
+SELECT * FROM vehicle;
+SELECT * FROM allocation;
+SELECT * FROM employee;
 CREATE TABLE allocation(
     employee INTEGER REFERENCES employee(ssn),
     license_plate VARCHAR(20) REFERENCES vehicle(license_plate),
