@@ -8,7 +8,7 @@ module.exports = {
         host : '127.0.0.1',
         port : 3306,
         user : 'root',
-        password : 'test',
+        password : 'StarBoy1717!',
         insecureAuth: true,
         database : 'parking_db'
       }

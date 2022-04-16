@@ -5,6 +5,7 @@ const mysql = require('mysql');
 
 const usersRoutes = require('./routes/users');
 const sessionRoutes = require('./routes/session');
+const loggedInRoutes = require('./routes/loggedInRoutes');
 
 const { authenticateJWT, authenticateWithClaims } = require('./middleware/auth');
 
