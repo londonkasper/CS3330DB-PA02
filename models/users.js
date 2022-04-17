@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const USER_TABLE = 'employee';
 const VEHICLE_TABLE = 'vehicle';
 const ALLOCATION_TABLE = 'allocation';
+const PARKING_SPOT_TABLE = 'parking_spot'
 
 const createNewUser = async (username, password, first_name, last_name, ssn, lot_assignment ) => {
     console.log('Raw password:', password);

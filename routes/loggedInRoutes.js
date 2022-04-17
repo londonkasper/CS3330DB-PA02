@@ -84,7 +84,7 @@ router.get('/spots', async (req, res, next) => {
         const lot = req.query.lot;
         const available = req.query.available;
 
-        console.log("stadium",stadium,"lot",lot,"available",available);
+        //console.log("stadium",stadium,"\nlot",lot,"\navailable",available);
 
         const results = await User.getSpots(stadium, lot, available);
         //console.log("results of the query",results);
